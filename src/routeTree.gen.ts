@@ -9,38 +9,148 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SettingsRouteImport } from './routes/settings'
+import { Route as ProgressRouteImport } from './routes/progress'
+import { Route as NotebookRouteImport } from './routes/notebook'
+import { Route as LabsRouteImport } from './routes/labs'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as LabLabIdRouteImport } from './routes/lab.$labId'
+import { Route as ExperimentLabIdExpIdRouteImport } from './routes/experiment.$labId.$expId'
 
+const SettingsRoute = SettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProgressRoute = ProgressRouteImport.update({
+  id: '/progress',
+  path: '/progress',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NotebookRoute = NotebookRouteImport.update({
+  id: '/notebook',
+  path: '/notebook',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LabsRoute = LabsRouteImport.update({
+  id: '/labs',
+  path: '/labs',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LabLabIdRoute = LabLabIdRouteImport.update({
+  id: '/lab/$labId',
+  path: '/lab/$labId',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ExperimentLabIdExpIdRoute = ExperimentLabIdExpIdRouteImport.update({
+  id: '/experiment/$labId/$expId',
+  path: '/experiment/$labId/$expId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/labs': typeof LabsRoute
+  '/notebook': typeof NotebookRoute
+  '/progress': typeof ProgressRoute
+  '/settings': typeof SettingsRoute
+  '/lab/$labId': typeof LabLabIdRoute
+  '/experiment/$labId/$expId': typeof ExperimentLabIdExpIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/labs': typeof LabsRoute
+  '/notebook': typeof NotebookRoute
+  '/progress': typeof ProgressRoute
+  '/settings': typeof SettingsRoute
+  '/lab/$labId': typeof LabLabIdRoute
+  '/experiment/$labId/$expId': typeof ExperimentLabIdExpIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/labs': typeof LabsRoute
+  '/notebook': typeof NotebookRoute
+  '/progress': typeof ProgressRoute
+  '/settings': typeof SettingsRoute
+  '/lab/$labId': typeof LabLabIdRoute
+  '/experiment/$labId/$expId': typeof ExperimentLabIdExpIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/labs'
+    | '/notebook'
+    | '/progress'
+    | '/settings'
+    | '/lab/$labId'
+    | '/experiment/$labId/$expId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/labs'
+    | '/notebook'
+    | '/progress'
+    | '/settings'
+    | '/lab/$labId'
+    | '/experiment/$labId/$expId'
+  id:
+    | '__root__'
+    | '/'
+    | '/labs'
+    | '/notebook'
+    | '/progress'
+    | '/settings'
+    | '/lab/$labId'
+    | '/experiment/$labId/$expId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  LabsRoute: typeof LabsRoute
+  NotebookRoute: typeof NotebookRoute
+  ProgressRoute: typeof ProgressRoute
+  SettingsRoute: typeof SettingsRoute
+  LabLabIdRoute: typeof LabLabIdRoute
+  ExperimentLabIdExpIdRoute: typeof ExperimentLabIdExpIdRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/settings': {
+      id: '/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof SettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/progress': {
+      id: '/progress'
+      path: '/progress'
+      fullPath: '/progress'
+      preLoaderRoute: typeof ProgressRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/notebook': {
+      id: '/notebook'
+      path: '/notebook'
+      fullPath: '/notebook'
+      preLoaderRoute: typeof NotebookRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/labs': {
+      id: '/labs'
+      path: '/labs'
+      fullPath: '/labs'
+      preLoaderRoute: typeof LabsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,11 +158,31 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/lab/$labId': {
+      id: '/lab/$labId'
+      path: '/lab/$labId'
+      fullPath: '/lab/$labId'
+      preLoaderRoute: typeof LabLabIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/experiment/$labId/$expId': {
+      id: '/experiment/$labId/$expId'
+      path: '/experiment/$labId/$expId'
+      fullPath: '/experiment/$labId/$expId'
+      preLoaderRoute: typeof ExperimentLabIdExpIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  LabsRoute: LabsRoute,
+  NotebookRoute: NotebookRoute,
+  ProgressRoute: ProgressRoute,
+  SettingsRoute: SettingsRoute,
+  LabLabIdRoute: LabLabIdRoute,
+  ExperimentLabIdExpIdRoute: ExperimentLabIdExpIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

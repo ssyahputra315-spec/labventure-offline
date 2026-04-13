@@ -15,6 +15,7 @@ import { Route as NotebookRouteImport } from './routes/notebook'
 import { Route as LabsRouteImport } from './routes/labs'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as LabLabIdRouteImport } from './routes/lab.$labId'
+import { Route as ExperimentLabIdExpIdRouteImport } from './routes/experiment.$labId.$expId'
 
 const SettingsRoute = SettingsRouteImport.update({
   id: '/settings',
@@ -46,6 +47,11 @@ const LabLabIdRoute = LabLabIdRouteImport.update({
   path: '/lab/$labId',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ExperimentLabIdExpIdRoute = ExperimentLabIdExpIdRouteImport.update({
+  id: '/experiment/$labId/$expId',
+  path: '/experiment/$labId/$expId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -54,6 +60,7 @@ export interface FileRoutesByFullPath {
   '/progress': typeof ProgressRoute
   '/settings': typeof SettingsRoute
   '/lab/$labId': typeof LabLabIdRoute
+  '/experiment/$labId/$expId': typeof ExperimentLabIdExpIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -62,6 +69,7 @@ export interface FileRoutesByTo {
   '/progress': typeof ProgressRoute
   '/settings': typeof SettingsRoute
   '/lab/$labId': typeof LabLabIdRoute
+  '/experiment/$labId/$expId': typeof ExperimentLabIdExpIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -71,6 +79,7 @@ export interface FileRoutesById {
   '/progress': typeof ProgressRoute
   '/settings': typeof SettingsRoute
   '/lab/$labId': typeof LabLabIdRoute
+  '/experiment/$labId/$expId': typeof ExperimentLabIdExpIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -81,8 +90,16 @@ export interface FileRouteTypes {
     | '/progress'
     | '/settings'
     | '/lab/$labId'
+    | '/experiment/$labId/$expId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/labs' | '/notebook' | '/progress' | '/settings' | '/lab/$labId'
+  to:
+    | '/'
+    | '/labs'
+    | '/notebook'
+    | '/progress'
+    | '/settings'
+    | '/lab/$labId'
+    | '/experiment/$labId/$expId'
   id:
     | '__root__'
     | '/'
@@ -91,6 +108,7 @@ export interface FileRouteTypes {
     | '/progress'
     | '/settings'
     | '/lab/$labId'
+    | '/experiment/$labId/$expId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -100,6 +118,7 @@ export interface RootRouteChildren {
   ProgressRoute: typeof ProgressRoute
   SettingsRoute: typeof SettingsRoute
   LabLabIdRoute: typeof LabLabIdRoute
+  ExperimentLabIdExpIdRoute: typeof ExperimentLabIdExpIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -146,6 +165,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LabLabIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/experiment/$labId/$expId': {
+      id: '/experiment/$labId/$expId'
+      path: '/experiment/$labId/$expId'
+      fullPath: '/experiment/$labId/$expId'
+      preLoaderRoute: typeof ExperimentLabIdExpIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -156,6 +182,7 @@ const rootRouteChildren: RootRouteChildren = {
   ProgressRoute: ProgressRoute,
   SettingsRoute: SettingsRoute,
   LabLabIdRoute: LabLabIdRoute,
+  ExperimentLabIdExpIdRoute: ExperimentLabIdExpIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

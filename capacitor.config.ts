@@ -3,7 +3,7 @@ import type { CapacitorConfig } from '@capacitor/cli';
 const config: CapacitorConfig = {
   appId: 'com.physicslab.simulator',
   appName: 'Physics Lab Simulator',
-  webDir: '.output/public',
+  webDir: 'dist-capacitor',
   server: {
     androidScheme: 'https',
   },

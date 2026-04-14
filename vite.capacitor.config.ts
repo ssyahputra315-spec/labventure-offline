@@ -8,10 +8,10 @@ export default defineConfig({
   build: {
     outDir: "dist-capacitor",
     emptyOutDir: true,
+    rollupOptions: {
+      input: "index.capacitor.html",
+    },
   },
-  root: ".",
-  publicDir: "public",
-  // Use the capacitor-specific HTML entry
   resolve: {
     alias: {
       "@": "/src",
